@@ -3,14 +3,16 @@ package com.example.jetpackcompose.codelab
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.InnerPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumnForIndexed
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.text.style.TextAlign
@@ -34,9 +36,12 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 fun Greeting(text: List<String>) {
-    LazyColumnFor(text, contentPadding = InnerPadding(8.dp)) {
-        Card(modifier = Modifier.fillParentMaxWidth().padding(6.dp)) {
-            Text(text = it,
+    val state = text.toMutableStateList()
+    LazyColumnForIndexed(state, contentPadding = InnerPadding(8.dp)) { index, t ->
+        Card(modifier = Modifier.fillParentMaxWidth().padding(6.dp).clickable {
+            state[index] = "Clicked!"
+        }) {
+            Text(text = t,
                  textAlign = TextAlign.Start,
                  modifier = Modifier.fillMaxWidth().padding(30.dp, 16.dp, 16.dp, 16.dp))
         }
