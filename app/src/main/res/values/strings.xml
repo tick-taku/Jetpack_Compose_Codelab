@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Jetpack Compose Codelab</string>
+    <string name="main_title">Codelab</string>
 </resources>
