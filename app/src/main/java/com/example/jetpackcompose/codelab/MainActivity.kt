@@ -29,7 +29,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            JetpackComposeCodelabTheme { MainScreen() }
+            JetpackComposeCodelabTheme {
+                MainScreen()
+                CongratulationDialog()
+            }
         }
     }
 
@@ -45,6 +48,21 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         )
+    }
+
+    @Composable
+    private fun CongratulationDialog() {
+        if (viewModel.openDialog.observeAsState(initial = false).value)
+            AlertDialog(
+                onDismissRequest = {},
+                confirmButton = {
+                    Button(onClick = { viewModel.refresh() }) {
+                        Text(text = getString(R.string.ok))
+                    }
+                },
+                title = { Text(text = getString(R.string.congratulations)) },
+                text = { Text(text = getString(R.string.dialog_msg)) }
+            )
     }
 }
 

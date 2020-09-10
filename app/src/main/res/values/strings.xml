@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Jetpack Compose Codelab</string>
     <string name="main_title">Codelab</string>
+
+    <string name="congratulations">Woohoo!!</string>
+    <string name="dialog_msg">Congratulations! You clicked on all items.</string>
+    <string name="ok">OK</string>
 </resources>
