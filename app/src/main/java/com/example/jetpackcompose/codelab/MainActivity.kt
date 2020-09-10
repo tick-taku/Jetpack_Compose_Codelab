@@ -29,23 +29,27 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            JetpackComposeCodelabTheme {
-                Scaffold(
-                    topBar = {
-                        AppBar(title = getString(R.string.main_title)) { viewModel.refresh() }
-                    }
-                ) {
-                    Greeting(viewModel.items.observeAsState(listOf()).value) {
-                        viewModel.click(it)
-                    }
+            JetpackComposeCodelabTheme { MainScreen() }
+        }
+    }
+
+    @Composable
+    private fun MainScreen() {
+        Scaffold(
+            topBar = {
+                AppBar(title = getString(R.string.main_title)) { viewModel.refresh() }
+            },
+            bodyContent = {
+                Greeting(viewModel.items.observeAsState(listOf()).value) {
+                    viewModel.click(it)
                 }
             }
-        }
+        )
     }
 }
 
 @Composable
-fun AppBar(title: String, onMenuClick: () -> Unit = {}) {
+private fun AppBar(title: String, onMenuClick: () -> Unit = {}) {
     TopAppBar(
         title = { Text(text = title) },
         actions = {
@@ -55,7 +59,7 @@ fun AppBar(title: String, onMenuClick: () -> Unit = {}) {
 }
 
 @Composable
-fun Greeting(items: List<String>, onClick: (Int) -> Unit = {}) {
+private fun Greeting(items: List<String>, onClick: (Int) -> Unit = {}) {
     LazyColumnForIndexed(items, contentPadding = InnerPadding(8.dp)) { index, t ->
         val cardModifier = Modifier.fillParentMaxWidth().padding(6.dp).clickable {
             onClick(index)
