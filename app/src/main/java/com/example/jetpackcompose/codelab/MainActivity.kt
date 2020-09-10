@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.InnerPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -31,16 +30,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             JetpackComposeCodelabTheme {
-                Column {
-                    AppBar(title = getString(R.string.main_title)) {
-                        viewModel.refresh()
+                Scaffold(
+                    topBar = {
+                        AppBar(title = getString(R.string.main_title)) { viewModel.refresh() }
                     }
-
-                    // A surface container using the 'background' color from the theme
-                    Surface(color = MaterialTheme.colors.background) {
-                        Greeting(viewModel.items.observeAsState(listOf()).value) {
-                            viewModel.click(it)
-                        }
+                ) {
+                    Greeting(viewModel.items.observeAsState(listOf()).value) {
+                        viewModel.click(it)
                     }
                 }
             }
@@ -76,6 +72,9 @@ fun Greeting(items: List<String>, onClick: (Int) -> Unit = {}) {
 @Composable
 fun DefaultPreview() {
     JetpackComposeCodelabTheme {
-        Greeting((0 until 10).map { it.toString() })
+        Scaffold(
+            topBar = { AppBar(title = "Preview") },
+            bodyContent = { Greeting((0 until 10).map { it.toString() }) }
+        )
     }
 }
