@@ -10,14 +10,13 @@ class MainViewModel: ViewModel() {
 
     companion object {
         private const val ITEM_COUNT = 100
-        private const val CHECK_MARK = "Clicked!"
     }
 
-    private val _items: MutableLiveData<MutableList<String>> = MutableLiveData()
-    val items: LiveData<List<String>> =
+    private val _items: MutableLiveData<MutableList<Boolean>> = MutableLiveData()
+    val items: LiveData<List<Boolean>> =
         _items.map { it.toList() }
             .doOnNext {
-                _openDialog.postValue(it.all { item -> item == CHECK_MARK })
+                _openDialog.postValue(it.all { isChecked -> isChecked })
             }
 
     private val _openDialog: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -27,12 +26,12 @@ class MainViewModel: ViewModel() {
 
     fun click(index: Int) {
         _items.value?.let {
-            it[index] = CHECK_MARK
+            it[index] = true
             _items.postValue(it)
         }
     }
 
     fun refresh() {
-        _items.postValue((0 until ITEM_COUNT).map { it.toString() }.toMutableList())
+        _items.postValue(MutableList(ITEM_COUNT) { false })
     }
 }
