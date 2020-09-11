@@ -35,8 +35,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @Composable
-    private fun MainScreen() {
+    @Composable private fun MainScreen() {
         Scaffold(
             topBar = {
                 AppBar(title = getString(R.string.main_title)) { viewModel.refresh() }
@@ -49,8 +48,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    @Composable
-    private fun CongratulationDialog() {
+    @Composable private fun CongratulationDialog() {
         if (viewModel.openDialog.observeAsState(initial = false).value)
             AlertDialog(
                 onDismissRequest = {},
@@ -65,8 +63,7 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-@Composable
-private fun AppBar(title: String, onMenuClick: () -> Unit = {}) {
+@Composable private fun AppBar(title: String, onMenuClick: () -> Unit = {}) {
     TopAppBar(
         title = { Text(text = title) },
         actions = {
@@ -75,8 +72,7 @@ private fun AppBar(title: String, onMenuClick: () -> Unit = {}) {
     )
 }
 
-@Composable
-private fun NumberList(items: List<Boolean>, onClick: (Int) -> Unit = {}) {
+@Composable private fun NumberList(items: List<Boolean>, onClick: (Int) -> Unit = {}) {
     LazyColumnForIndexed(items, contentPadding = InnerPadding(8.dp)) { index, isChecked ->
         val cardModifier = Modifier.fillParentMaxWidth().padding(6.dp).clickable {
             onClick(index)
@@ -87,8 +83,7 @@ private fun NumberList(items: List<Boolean>, onClick: (Int) -> Unit = {}) {
     }
 }
 
-@Composable
-private fun CheckCard(index: Int, isChecked: Boolean) {
+@Composable private fun CheckCard(index: Int, isChecked: Boolean) {
     ConstraintLayout {
         val (text, checkbox) = createRefs()
         Text(
@@ -115,8 +110,7 @@ private fun CheckCard(index: Int, isChecked: Boolean) {
 }
 
 @Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
+@Composable fun DefaultPreview() {
     JetpackComposeCodelabTheme {
         Scaffold(
             topBar = { AppBar(title = "Preview") },
